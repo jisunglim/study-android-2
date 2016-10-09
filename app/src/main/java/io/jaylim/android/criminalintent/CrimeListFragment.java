@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import java.util.List;
  */
 
 public class CrimeListFragment extends Fragment {
+
+    private static final String TAG = "CrimeListFragment";
 
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
@@ -42,6 +45,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
+        //
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
 
         mCrimeRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
@@ -71,7 +75,6 @@ public class CrimeListFragment extends Fragment {
     @Override public void onPause() {
         super.onPause();
     }
-
     @Override public void onStop() {
         super.onStop();
     }
@@ -96,13 +99,17 @@ public class CrimeListFragment extends Fragment {
         if (mAdapter == null) {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
-        } else {
-            // Last resort
-            // mAdapter.notifyDataSetChanged();
-            mAdapter.notifyItemChanged(0);
+            Log.d(TAG, "Construct new Adapter");
+        } else if (mSelectedCrimeIndex != -1) {
+            mAdapter.notifyItemChanged(mSelectedCrimeIndex);
+            Log.d(TAG, "Notify specific list changed #" + mSelectedCrimeIndex);
+        } else { // Last resort
+            mAdapter.notifyDataSetChanged();
+            Log.d(TAG, "Notify changed");
         }
     }
 
+    private int mSelectedCrimeIndex = -1;
 
     /*
      * A ViewHolder describes
@@ -114,6 +121,7 @@ public class CrimeListFragment extends Fragment {
         private TextView mTitleTextView; // additional filed
         private TextView mDateTextView;
         private CheckBox mSolvedCheckBox;
+        private int mCrimeIndex;
 
         public CrimeHolder(View itemView) {
             super(itemView);
@@ -126,7 +134,6 @@ public class CrimeListFragment extends Fragment {
                     itemView.findViewById(R.id.list_item_crime_solved_check_box);
         }
 
-
         public void bindCrime(Crime crime) {
             mCrime = crime;
             mTitleTextView.setText(mCrime.getTitle());
@@ -134,38 +141,23 @@ public class CrimeListFragment extends Fragment {
             mSolvedCheckBox.setChecked(mCrime.isSolved());
         }
 
+        public void bindCrime(Crime crime, int position) {
+            mCrime = crime;
+            mTitleTextView.setText(mCrime.getTitle());
+            mDateTextView.setText(mCrime.getFormattedDate());
+            mSolvedCheckBox.setChecked(mCrime.isSolved());
+            mCrimeIndex = position;
+        }
+
         @Override
         public void onClick(View v) {
+            mSelectedCrimeIndex = mCrimeIndex;
             // Send intent including extra data to Activity Manager
             // so that Child activity (CrimeActivity) can be started with proper data.
             Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
             startActivity(intent);
-            /* TODO
-            startActivityForResult(intent, GET_CRIME_INDEX);
-            TODO */
         }
     }
-
-    /* TODO
-    private static final int GET_CRIME_INDEX = 1;
-
-    private int mCrimeIndex;
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != AppCompatActivity.RESULT_OK) {
-            return;
-        }
-        if (requestCode == GET_CRIME_INDEX) {
-            if (data == null) {
-                return;
-            }
-            if ()
-            mCrimeIndex = data.getIntExtra("", -1);
-        }
-    }
-    TODO */
 
     /*
          * Adapters provide a "binding"
@@ -201,7 +193,7 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onBindViewHolder(CrimeHolder holder, int position) {
             Crime crime = mCrimes.get(position);
-            holder.bindCrime(crime);
+            holder.bindCrime(crime, position);
         }
     }
 }

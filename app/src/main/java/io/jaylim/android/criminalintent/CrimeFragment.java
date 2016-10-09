@@ -112,22 +112,6 @@ public class CrimeFragment extends Fragment {
         return fragment;
     }
 
-    /* TODO
-    private static final String EXTRA_CRIME_INDEX =
-            "io.jaylim.android.criminalintent.crime_index";
-
-    public void returnResult() {
-        Intent data = new Intent();
-        data.putExtra(EXTRA_CRIME_INDEX, );
-        getActivity().setResult(Activity.RESULT_OK, null);
-    }
-
-    public static int changedCrimeIndex(Intent result) {
-        return result.getIntExtra();
-    }
-    TODO */
-
-
     // [INFO - HOSTING ACTIVITY] onCreate(Bundle) backed
     // Initialize some values. If any, restore instance state would be backed.
     // Also, we can call onViewStateRestored() to restore instance state.
