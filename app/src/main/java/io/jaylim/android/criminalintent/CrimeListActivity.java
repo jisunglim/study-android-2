@@ -6,6 +6,7 @@ import android.util.Log;
 
 /**
  * Created by jaylim on 10/7/2016.
+ *
  */
 
 public class CrimeListActivity extends SingleFragmentActivity {

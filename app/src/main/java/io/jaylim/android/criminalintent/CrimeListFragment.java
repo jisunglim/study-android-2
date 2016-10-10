@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * Created by jaylim on 10/7/2016.
+ *
  */
 
 public class CrimeListFragment extends Fragment {
@@ -153,8 +154,8 @@ public class CrimeListFragment extends Fragment {
         public void onClick(View v) {
             mSelectedCrimeIndex = mCrimeIndex;
             // Send intent including extra data to Activity Manager
-            // so that Child activity (CrimeActivity) can be started with proper data.
-            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
+            // so that Child activity (CrimePagerActivity) can be started with proper data.
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
             startActivity(intent);
         }
     }
