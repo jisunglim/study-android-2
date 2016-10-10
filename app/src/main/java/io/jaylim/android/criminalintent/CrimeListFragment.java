@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -135,17 +133,10 @@ public class CrimeListFragment extends Fragment {
                     itemView.findViewById(R.id.list_item_crime_solved_check_box);
         }
 
-        public void bindCrime(Crime crime) {
-            mCrime = crime;
-            mTitleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getFormattedDate());
-            mSolvedCheckBox.setChecked(mCrime.isSolved());
-        }
-
         public void bindCrime(Crime crime, int position) {
             mCrime = crime;
             mTitleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getFormattedDate());
+            mDateTextView.setText(mCrime.getFormattedDateTime());
             mSolvedCheckBox.setChecked(mCrime.isSolved());
             mCrimeIndex = position;
         }
@@ -156,15 +147,23 @@ public class CrimeListFragment extends Fragment {
             // Send intent including extra data to Activity Manager
             // so that Child activity (CrimePagerActivity) can be started with proper data.
             Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
-            startActivity(intent);
+            //startActivity(intent);
+            startActivityForResult(intent, REQUEST_CRIME_RESULT);
         }
     }
 
+    private static final int REQUEST_CRIME_RESULT = 1;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     /*
-         * Adapters provide a "binding"
-         * from an app-specific data set
-         * to views that are displayed within a RecyclerView.
-         */
+             * Adapters provide a "binding"
+             * from an app-specific data set
+             * to views that are displayed within a RecyclerView.
+             */
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
         private List<Crime> mCrimes;
 

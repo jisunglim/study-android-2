@@ -38,8 +38,16 @@ public class Crime {
         return mDate;
     }
 
-    public String getFormattedDate() {
+    public String getFormattedDateTime() {
         return DateFormat.format("EEE, MMM d HH:mm:ss zzz yyyy", mDate).toString();
+    }
+
+    public String getFormattedDate() {
+        return DateFormat.format("EEE, MMM d", mDate).toString();
+    }
+
+    public String getFormattedTime() {
+        return DateFormat.format("HH:mm:ss", mDate).toString();
     }
 
     public void setDate(Date date) {
