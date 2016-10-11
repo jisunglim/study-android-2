@@ -147,16 +147,8 @@ public class CrimeListFragment extends Fragment {
             // Send intent including extra data to Activity Manager
             // so that Child activity (CrimePagerActivity) can be started with proper data.
             Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
-            //startActivity(intent);
-            startActivityForResult(intent, REQUEST_CRIME_RESULT);
+            startActivity(intent);
         }
-    }
-
-    private static final int REQUEST_CRIME_RESULT = 1;
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /*
