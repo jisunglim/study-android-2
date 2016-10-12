@@ -13,7 +13,14 @@ import android.support.v4.app.FragmentManager;
 
 public abstract class SingleFragmentActivity extends FragmentActivity {
 
+    protected boolean mIsArguments = false;
+
     protected abstract Fragment createFragment();
+
+    protected Fragment setArgument(Fragment fragment) {
+        return fragment;
+    }
+
 
    /*
     * What should activity do to host fragments
@@ -37,5 +44,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
+
+        fragment = setArgument(fragment);
     }
 }

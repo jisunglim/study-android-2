@@ -38,12 +38,16 @@ public class CrimeFragment extends Fragment {
     private static final int REQUEST_TIME = 1;
 
     private Crime mCrime;
+
     private EditText mTitleField;
+
     private Button mDateButton;
     private Button mTimeButton;
-
+    private Button mDateButton2;
+    private Button mTimeButton2;
 
     private CheckBox mSolvedCheckBox;
+    private CheckBox mSolvedCheckBox2;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,6 +98,7 @@ public class CrimeFragment extends Fragment {
             }
         });
 
+
         mTimeButton = (Button) v.findViewById(R.id.crime_time);
         mTimeButton.setText(mCrime.getFormattedTime());
         mTimeButton.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +117,40 @@ public class CrimeFragment extends Fragment {
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mCrime.setSolved(isChecked);
+            }
+        });
+
+        // Date Picker Button
+        mDateButton2 = (Button) v.findViewById(R.id.crime_date_2);
+        mDateButton2.setText(mCrime.getFormattedDate());
+        mDateButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = DatePickerActivity.newIntent(getActivity(), mCrime.getDate());
+                startActivityForResult(intent, REQUEST_DATE);
+            }
+        });
+
+
+        mTimeButton2 = (Button) v.findViewById(R.id.crime_time_2);
+        mTimeButton2.setText(mCrime.getFormattedTime());
+        mTimeButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* TODO
+                Intent intent TimePickerActivity.newIntent(getActivity(), mCrime.getDate());
+                startActivityForResult(intent, REQUEST_TIME);
+                */
+            }
+        });
+
+        // Solved Check Box
+        mSolvedCheckBox2 = (CheckBox) v.findViewById(R.id.crime_solved_2);
+        mSolvedCheckBox2.setChecked(mCrime.isSolved());
+        mSolvedCheckBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCrime.setSolved(isChecked);
@@ -143,11 +182,13 @@ public class CrimeFragment extends Fragment {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mCrime.setDate(date);
             mDateButton.setText(mCrime.getFormattedDate());
+            mDateButton2.setText(mCrime.getFormattedDate());
 
         } else if (requestCode == REQUEST_TIME) {
             Date date = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
             mCrime.setDate(date);
             mTimeButton.setText(mCrime.getFormattedTime());
+            mTimeButton2.setText(mCrime.getFormattedDate());
         }
 
     }

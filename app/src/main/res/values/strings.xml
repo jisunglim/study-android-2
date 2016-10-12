@@ -6,5 +6,7 @@
     <string name="crime_solved_label">Solved</string>
     <string name="date_picker_title">Crime Date : </string>
     <string name="time_picker_title">Crime Time : </string>
+    <string name="picker_ok">OK</string>
+    <string name="picker_cancel">Cancel</string>
 </resources>
 
