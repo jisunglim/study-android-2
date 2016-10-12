@@ -45,11 +45,11 @@ public class DatePickerFragment extends DialogFragment {
     }
 
     int mYear;
+
     int mMonth;
     int mDay;
     int mHour;
     int mMinute;
-
     private void initDateTime() {
         Date date = (Date) getArguments().getSerializable(ARG_DATETIME);
 
@@ -65,11 +65,10 @@ public class DatePickerFragment extends DialogFragment {
     }
 
     // USE VIEW
-
     private DatePicker mDatePicker2;
+
     private Button mCancelButton;
     private Button mOkButton;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -79,7 +78,7 @@ public class DatePickerFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_date_2, container, false);
 
         mDatePicker2 = (DatePicker) view.findViewById(R.id.dialog_date_2_date_picker);
-        setDatePicker();
+        setDatePicker(DATE_PICKER_VIEW);
 
         mCancelButton = (Button) view.findViewById(R.id.dialog_date_2_cancel_button);
         mCancelButton.setOnClickListener(new View.OnClickListener(){
@@ -93,7 +92,7 @@ public class DatePickerFragment extends DialogFragment {
         mOkButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                setDate();
+                setDate(DATE_PICKER_VIEW);
                 Date datetime = new GregorianCalendar(mYear, mMonth, mDay, mHour, mMinute).getTime();
 
                 setSelectedDateResult(datetime);
@@ -123,7 +122,7 @@ public class DatePickerFragment extends DialogFragment {
                 .inflate(R.layout.dialog_date, null);
 
         mDatePicker = (DatePicker) v.findViewById(R.id.dialog_date_date_picker);
-        setDatePicker();
+        setDatePicker(DATE_PICKER_DIALOG);
 
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
@@ -132,7 +131,7 @@ public class DatePickerFragment extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                setDate();
+                                setDate(DATE_PICKER_DIALOG);
 
                                 Date datetime = new GregorianCalendar(mYear, mMonth, mDay, mHour, mMinute).getTime();
                                 sendResult(RESULT_OK, datetime);
@@ -155,14 +154,26 @@ public class DatePickerFragment extends DialogFragment {
                 .onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 
-    private void setDatePicker() {
-        mDatePicker.init(mYear, mMonth, mDay, null);
+    private static final int DATE_PICKER_DIALOG = 0;
+    private static final int DATE_PICKER_VIEW = 1;
 
+    private void setDatePicker(int selectDatePicker) {
+        if (selectDatePicker == DATE_PICKER_DIALOG) {
+            mDatePicker.init(mYear, mMonth, mDay, null);
+        } else if (selectDatePicker == DATE_PICKER_VIEW) {
+            mDatePicker2.init(mYear, mMonth, mDay, null);
+        }
     }
 
-    private void setDate() {
-        mYear = mDatePicker2.getYear();
-        mMonth = mDatePicker2.getMonth();
-        mDay = mDatePicker2.getDayOfMonth();
+    private void setDate(int selectDatePicker) {
+        if (selectDatePicker == DATE_PICKER_DIALOG) {
+            mYear = mDatePicker.getYear();
+            mMonth = mDatePicker.getMonth();
+            mDay = mDatePicker.getDayOfMonth();
+        } else if (selectDatePicker == DATE_PICKER_VIEW) {
+            mYear = mDatePicker2.getYear();
+            mMonth = mDatePicker2.getMonth();
+            mDay = mDatePicker2.getDayOfMonth();
+        }
     }
 }
