@@ -2,6 +2,7 @@ package io.jaylim.android.criminalintent;
 
 import android.text.format.DateFormat;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
 public class Crime {
     private UUID mId;
     private String mTitle;
-    private Date mDate;
+    private Date mDate = Calendar.getInstance().getTime();
     private boolean mSolved;
 
     /** Constructor */
@@ -39,15 +40,24 @@ public class Crime {
     }
 
     public String getFormattedDateTime() {
-        return DateFormat.format("EEE, MMM d HH:mm:ss zzz yyyy", mDate).toString();
+        if (mDate != null) {
+            return DateFormat.format("EEE, MMM d HH:mm:ss zzz yyyy", mDate).toString();
+        }
+        return "";
     }
 
     public String getFormattedDate() {
-        return DateFormat.format("EEE, MMM d", mDate).toString();
+        if (mDate != null) {
+            return DateFormat.format("EEE, MMM d", mDate).toString();
+        }
+        return "";
     }
 
     public String getFormattedTime() {
-        return DateFormat.format("HH:mm:ss", mDate).toString();
+        if (mDate != null) {
+            return DateFormat.format("HH:mm:ss", mDate).toString();
+        }
+        return "";
     }
 
     public void setDate(Date date) {
@@ -60,5 +70,13 @@ public class Crime {
 
     public void setSolved(boolean solved) {
         mSolved = solved;
+    }
+
+    private <T> T checkNullity(T object) {
+        if (object != null) {
+            return object;
+        } else {
+            return null;
+        }
     }
 }
