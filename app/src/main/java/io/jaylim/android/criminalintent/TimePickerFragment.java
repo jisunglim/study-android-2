@@ -77,7 +77,7 @@ public class TimePickerFragment extends DialogFragment {
             @Nullable Bundle savedInstanceState) {
         initDateTime();
 
-        View view = inflater.inflate(R.layout.dialog_time_2, container, false);
+        View view = inflater.inflate(R.layout.fragment_time, container, false);
 
         mTimePicker2 = (TimePicker) view.findViewById(R.id.dialog_time_2_time_picker);
         setTimePicker(TIME_PICKER_VIEW);

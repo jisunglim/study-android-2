@@ -26,7 +26,6 @@ public class CrimePagerActivity extends AppCompatActivity {
     private static final String EXTRA_CRIME_ID =
             "io.jaylim.android.criminalintent.crime_id";
 
-
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
 
@@ -47,7 +46,7 @@ public class CrimePagerActivity extends AppCompatActivity {
             @Override
             public Fragment getItem(int position) {
                 Crime crime = mCrimes.get(position);
-                return CrimeFragment.newInstance(crime.getId());
+                return CrimeFragment.newInstance(crime.getId(), false);
             }
 
             @Override

@@ -22,14 +22,9 @@ public class DatePickerActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new DatePickerFragment();
-    }
-
-    @Override
-    protected Fragment setArgument(Fragment fragment) {
         Date crimeDate = (Date) getIntent()
                 .getSerializableExtra(EXTRA_CRIME_DATETIME);
-        return DatePickerFragment.newInstance((DatePickerFragment) fragment, crimeDate);
+        return DatePickerFragment.newInstance(crimeDate);
     }
 
 

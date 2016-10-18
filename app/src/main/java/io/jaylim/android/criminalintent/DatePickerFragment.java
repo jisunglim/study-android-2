@@ -45,11 +45,11 @@ public class DatePickerFragment extends DialogFragment {
     }
 
     int mYear;
-
     int mMonth;
     int mDay;
     int mHour;
     int mMinute;
+
     private void initDateTime() {
         Date date = (Date) getArguments().getSerializable(ARG_DATETIME);
 
@@ -66,16 +66,16 @@ public class DatePickerFragment extends DialogFragment {
 
     // USE VIEW
     private DatePicker mDatePicker2;
-
     private Button mCancelButton;
     private Button mOkButton;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         initDateTime();
 
-        View view = inflater.inflate(R.layout.dialog_date_2, container, false);
+        View view = inflater.inflate(R.layout.fragment_date, container, false);
 
         mDatePicker2 = (DatePicker) view.findViewById(R.id.dialog_date_2_date_picker);
         setDatePicker(DATE_PICKER_VIEW);

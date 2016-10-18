@@ -142,6 +142,7 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
+
     /*
      * Adapters provide a "binding"
      * from an app-specific data set
@@ -201,11 +202,13 @@ public class CrimeListFragment extends Fragment {
         switch(item.getItemId()) {
             case R.id.menu_item_new_crime :
                 Crime crime = new Crime();
+
                 CrimeLab.get(getActivity()).addCrime(crime);
-                Intent intent = CrimePagerActivity
+                Intent intent = NewCrimeActivity
                         .newIntent(getActivity(), crime.getId());
                 startActivity(intent);
                 return true;
+
             case R.id.menu_item_show_subtitle :
                 mSubtitleVisible = !mSubtitleVisible;
                 getActivity().invalidateOptionsMenu();

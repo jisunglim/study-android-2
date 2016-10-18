@@ -24,6 +24,13 @@
         <item quantity="one">%1$d crime</item>
         <item quantity="other">%1$d crimes</item>
     </plurals>
+
+    <!-- crime construct button -->
+    <string name="cancel_new_crime">Cancel</string>
+    <string name="add_new_crime">Add</string>
+
+    <string name="delete_existing_crime">Delete</string>
+    <string name="modify_existing_crime">Apply</string>
 </resources>
 
 
