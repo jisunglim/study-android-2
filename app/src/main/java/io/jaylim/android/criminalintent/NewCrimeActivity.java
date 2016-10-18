@@ -33,7 +33,8 @@ public class NewCrimeActivity extends SingleFragmentActivity {
 
     @Override
     public void onBackPressed() {
-
+        CrimeLab crimeLab = CrimeLab.get(this);
+        crimeLab.removeCrime(mCrimeId);
 
         super.onBackPressed();
     }
