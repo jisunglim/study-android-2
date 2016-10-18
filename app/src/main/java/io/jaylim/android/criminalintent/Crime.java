@@ -19,7 +19,12 @@ public class Crime {
 
     /** Constructor */
     public Crime() {
-        mId = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+
+    public Crime(UUID id) {
+        mId = id;
+        mDate = new Date();
     }
 
     /** Getters and Setters */
@@ -72,11 +77,4 @@ public class Crime {
         mSolved = solved;
     }
 
-    private <T> T checkNullity(T object) {
-        if (object != null) {
-            return object;
-        } else {
-            return null;
-        }
-    }
 }

@@ -87,13 +87,11 @@ public class CrimeListFragment extends Fragment {
         if (mAdapter == null) {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
-            Log.d(TAG, "Construct new Adapter");
         } else if (mSelectedCrimeIndex != -1) {
+            mAdapter.setCrimes(crimes);
             mAdapter.notifyItemChanged(mSelectedCrimeIndex);
-            Log.d(TAG, "Notify specific list changed #" + mSelectedCrimeIndex);
         } else { // Last resort
             mAdapter.notifyDataSetChanged();
-            Log.d(TAG, "Notify changed");
         }
 
         updateSubtitle();
@@ -158,6 +156,10 @@ public class CrimeListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mCrimes.size();
+        }
+
+        public void setCrimes(List<Crime> crimes) {
+            mCrimes = crimes;
         }
 
         @Override
