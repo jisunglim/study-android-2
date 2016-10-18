@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import io.jaylim.android.criminalintent.database.CrimeBaseHelper;
+import io.jaylim.android.criminalintent.database.CrimeCursorWrapper;
 import io.jaylim.android.criminalintent.database.CrimeDbSchema.CrimeTable;
 
 /**
@@ -37,8 +38,8 @@ public class CrimeLab {
     }
 
     // CREATE
-    public void addCrime(Crime c) {
-        ContentValues values = getContentValues(c);
+    public void addCrime(Crime crime) {
+        ContentValues values = getContentValues(crime);
         mDatabase.insert(CrimeTable.NAME, null, values);
     }
 
@@ -54,9 +55,11 @@ public class CrimeLab {
 
     // DELETED
     public void removeCrime(UUID crimeId) {
+        String uuidString = crimeId.toString();
+
         mDatabase.delete(CrimeTable.NAME,
                 CrimeTable.Cols.UUID + " = ?",
-                new String[] {crimeId.toString()});
+                new String[] {uuidString});
     }
 
     // RETRIEVE
@@ -103,7 +106,9 @@ public class CrimeLab {
                 null,
                 whereClause,
                 whereArgs,
-                null, null, null
+                null,
+                null,
+                null
         );
 
         return new CrimeCursorWrapper(cursor);

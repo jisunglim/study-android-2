@@ -34,10 +34,6 @@ public class CrimeListFragment extends Fragment {
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
 
-    // No roles
-    @Override public void onAttach(Context context) {
-        super.onAttach(context);
-    }
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Inform to FragmentManager that onCreateOptionsMenu(...) method
@@ -70,9 +66,6 @@ public class CrimeListFragment extends Fragment {
         return view;
     }
 
-    @Override public void  onStart() {
-        super.onStart();
-    }
     @Override
     public void onResume() {
         super.onResume();
@@ -84,20 +77,19 @@ public class CrimeListFragment extends Fragment {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
 
+
+
         if (mAdapter == null) {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
-        } else if (mSelectedCrimeIndex != -1) {
+        } else {
             mAdapter.setCrimes(crimes);
-            mAdapter.notifyItemChanged(mSelectedCrimeIndex);
-        } else { // Last resort
             mAdapter.notifyDataSetChanged();
         }
 
         updateSubtitle();
     }
 
-    private int mSelectedCrimeIndex = -1;
 
     /*
      * A ViewHolder describes
@@ -127,12 +119,19 @@ public class CrimeListFragment extends Fragment {
             mTitleTextView.setText(mCrime.getTitle());
             mDateTextView.setText(mCrime.getFormattedDateTime());
             mSolvedCheckBox.setChecked(mCrime.isSolved());
+            mSolvedCheckBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mCrime.setSolved(!mCrime.isSolved());
+                    mSolvedCheckBox.setChecked(mCrime.isSolved());
+                    CrimeLab.get(getActivity()).updateCrime(mCrime);
+                }
+            });
             mCrimeIndex = position;
         }
 
         @Override
         public void onClick(View v) {
-            mSelectedCrimeIndex = mCrimeIndex;
             // Send intent including extra data to Activity Manager
             // so that Child activity (CrimePagerActivity) can be started with proper data.
             Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());

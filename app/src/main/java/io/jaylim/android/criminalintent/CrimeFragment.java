@@ -184,7 +184,7 @@ public class CrimeFragment extends Fragment {
                 public void onClick(View v) {
                     CrimeLab crimeLab = CrimeLab.get(getActivity());
                     crimeLab.removeCrime(mCrime.getId());
-                    getActivity().finish();
+                    getActivity().onBackPressed();
                 }
             });
         }
@@ -198,6 +198,7 @@ public class CrimeFragment extends Fragment {
                     mCrime.setTitle(mChangedTitle);
                     mCrime.setDate(mChangedDate);
                     mCrime.setSolved(mChangedSolved);
+                    CrimeLab.get(getActivity()).updateCrime(mCrime);
                     getActivity().finish();
                 }
             });
@@ -209,6 +210,7 @@ public class CrimeFragment extends Fragment {
                     mCrime.setTitle(mChangedTitle);
                     mCrime.setDate(mChangedDate);
                     mCrime.setSolved(mChangedSolved);
+                    CrimeLab.get(getActivity()).updateCrime(mCrime);
                     getActivity().finish();
                 }
             });
@@ -281,10 +283,11 @@ public class CrimeFragment extends Fragment {
 
     }
 
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//
-//        CrimeLab.get(getActivity()).updateCrime(mCrime);
-//    }
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+    }
+
 }

@@ -1,4 +1,4 @@
-package io.jaylim.android.criminalintent;
+package io.jaylim.android.criminalintent.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
@@ -6,6 +6,7 @@ import android.database.CursorWrapper;
 import java.util.Date;
 import java.util.UUID;
 
+import io.jaylim.android.criminalintent.Crime;
 import io.jaylim.android.criminalintent.database.CrimeDbSchema.CrimeTable;
 
 /**
